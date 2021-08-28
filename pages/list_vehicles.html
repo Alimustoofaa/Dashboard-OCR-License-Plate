@@ -1,0 +1,60 @@
+{% set active_page = "list_vehicles" %}
+{% include 'components/header.html' %}
+{% include 'components/mobile-menu.html' %}
+{% include 'components/side-menu.html' %}
+{% include 'components/top-bar.html' %}
+
+
+<div class="intro-y datatable-wrapper box p-5 mt-5">
+    <table class="table table-report table-report--bordered display datatable w-full">
+        <thead>
+            <tr>
+                <th class="border-b-2 text-center whitespace-no-wrap">NO</th>
+                <th class="border-b-2 text-center whitespace-no-wrap">TIME</th>
+                <th class="border-b-2 text-center whitespace-no-wrap">LICENSE PLATE</th>
+                <th class="border-b-2 text-center whitespace-no-wrap">VEHICLE TYPE</th>
+                <!-- <th class="border-b-2 text-center whitespace-no-wrap">IMAGES</th> -->
+                <th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr class="intro-x">
+                <td class="text-center border-b">
+                    <div class="font-normal whitespace-no-wrap">
+                        {{loop.index}}
+                    </div>
+                </td>
+                <td class="text-center border-b">
+                    <div class="font-normal whitespace-no-wrap">
+                        {{result['timestamp'].strftime('%Y-%m-%d')}}
+                    </div>
+                </td>
+                <td class="text-center border-b">
+                    <div class="font-normal whitespace-no-wrap">
+                        {{result['license_plate']}}
+                        <span class="text-xs px-1 bg-theme-1 text-white mr-1">
+                            {{result['conf_license_plate']}}
+                        </span>
+                    </div>
+                </td>
+                <td class="text-center border-b">
+                    <div class="font-normal whitespace-no-wrap">
+                        {{result['vehicle_type'].upper()}}
+                        <span class="text-xs px-1 bg-theme-6 text-white mr-1">
+                            {{result['conf_vehicle_type']}}
+                        </span>
+                    </div>
+                </td>
+                <td class="border-b w-5">
+                    <div class="flex sm:justify-center items-center">
+                        <a class="flex items-center text-theme-4" href=""> <i data-feather="eye" class="w-4 h-4 mr-1"></i> View </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'components/footer.html' %}
