@@ -1,14 +1,17 @@
+import asyncio
 import time
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Request, WebSocket
-from starlette.routing import WebSocketRoute
-from starlette.websockets import WebSocketDisconnect
-from ..utils import get_token_header, socket
-from .. import templates
-from .. schemas import Vehicle
-from ..config import engine, get_session_db
+from fastapi.params import Query
 from sqlalchemy.orm import Session
-from .. import controllers
+from starlette.websockets import WebSocketDisconnect
+from fastapi.encoders import jsonable_encoder
+
+from .. import controllers, templates
+from ..config import engine, get_session_db
+from ..schemas import Vehicle
+from ..utils import get_token_header, socket
 
 router = APIRouter()
 
@@ -28,32 +31,31 @@ def table_vehicles(request: Request):
 
 @router.post('/add')
 def add_vehicle(
-	vehicle: Vehicle, 
+	vehicle: Vehicle,
 	db: Session = Depends(get_session_db)
 	):
 	return controllers.add_vehicle(db, vehicle)
 
-@router.get('/all', response_model=List[Any])
+@router.get('/all')
 def get_vehicles(
-	request: Request,
-	db: Session = Depends(get_session_db),
+	request: Request
 	):
-	vehicles = controllers.get_vehicles(db)
-	return templates.TemplateResponse('list_vehicles.html', context={'request': request, 'results': vehicles})
+	results = {
+		'title' : 'List all results OCR'
+	}
+	return templates.TemplateResponse('list_vehicles.html', context={'request': request, 'results': results})
 
-@router.websocket_route('/ws')
+
 async def get_vehicle_socket(
 	websocket: WebSocket,
-	db: Session = Depends(get_session_db),
-	):	
-	print('disconnect')
-	# await manager.connect(websocket)
+	):
+	from ..config.database import SessionLocal
 	await websocket.accept()
 	try:
 		while True:
-			vehicles = await controllers.get_vehicles(db)
-			await websocket.send_json({'results': vehicles})
-			# time.sleep(5)
-	except WebSocketDisconnect:
-		# manager.disconnect(websocket)
-		pass
+			list_vehicles = controllers.get_vehicles(SessionLocal())
+			list = [i.__dict__ for i in list_vehicles if i != '_sa_instance_state']
+			await websocket.send_json({'results': jsonable_encoder(list)})
+			await asyncio.sleep(5)
+	except:
+		await websocket.close()

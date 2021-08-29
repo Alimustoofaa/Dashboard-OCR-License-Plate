@@ -22,17 +22,6 @@
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script> -->
 <!-- <script src="dist/js/app.js"></script> -->
 <script src="{{ url_for('dist', path='/js/app.js') }}"></script>
-<script>
-    var ws = new WebSocket("wss://127.0.0.1:8001/list_vehicles/ws");
-    ws.onmessage = function(event) {
-        // var messages = document.getElementById('messages')
-        // var message = document.createElement('li')
-        // var content = document.createTextNode(event.data)
-        // message.appendChild(content)
-        // messages.appendChild(message)
-        console.log(event)
-    };
-</script>
 <!-- END: JS Assets-->
 </body>
 </html>
