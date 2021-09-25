@@ -1,23 +1,19 @@
-from typing import Optional
-from fastapi import FastAPI
-from pydantic import BaseModel
-
 from typing import List
 from pydantic import BaseModel
 
 class VehicleClassification(BaseModel):
-	bbox: List
+	vehicle_type: str
 	confidence: float
-	clases: str
+	image: bytes
 
 class LicensePlate(BaseModel):
 	bbox: List
+	license_plate: str
 	confidence: float
-	result_ocr: str
+	image: bytes
 	
 class Vehicle(BaseModel):
+	id: int
+	processing_time: float
 	vehicle_classification: VehicleClassification
 	license_plate: LicensePlate
-	processing_time: float
-	image: bytes
-	filename: str

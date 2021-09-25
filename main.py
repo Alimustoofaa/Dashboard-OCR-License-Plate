@@ -18,6 +18,7 @@ app.add_middleware(
 )
 
 app.mount("/dist", StaticFiles(directory="assets/dist"), name="dist")
+app.mount("/images", StaticFiles(directory="images/"), name="images")
 templates = Jinja2Templates(directory="pages/")
 
 app.include_router(list_vehicles.router)

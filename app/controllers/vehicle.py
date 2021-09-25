@@ -1,42 +1,33 @@
-import os
 import cv2
 import base64
 import numpy as np
-from datetime import datetime
 from typing import List
-from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from ..models import Vehicle as M_Vehicle
 from ..schemas import Vehicle as S_Vehicle
+from ..utils import get_path_save_image
 
-ROOT = os.getcwd()
-DIRECTORY_SAVE_IMAGE = os.path.join(ROOT, 'assets/dist/results_ocr')
-
-def __decode_sting2image(image_encoded, filename):
+def __decode_sting2image(image_encoded, type_image, vehicle_id):
     jpg_original = base64.b64decode(image_encoded)
     jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
     image = cv2.imdecode(jpg_as_np, flags=1)
 
     # Save image
-    print(DIRECTORY_SAVE_IMAGE)
-    dir_filename = f'{DIRECTORY_SAVE_IMAGE}/{filename}'
+    dir_name = get_path_save_image(type_image)
+    dir_filename = f'{dir_name}/{vehicle_id}_{type_image}.jpg'
     cv2.imwrite(dir_filename, image)
-    pass
-
-def __extract_filename2_timestamp(datetime_str):
-    datetime_obj = datetime.strptime(datetime_str, '%y%m%d%H%M%S%f')
-    return datetime_obj
+    return f'{vehicle_id}_{type_image}.jpg'
 
 def add_vehicle(db: Session, vehicle: S_Vehicle):
-    __decode_sting2image(vehicle.image, vehicle.filename)
     db_vehicle = M_Vehicle(
-        timestamp           = __extract_filename2_timestamp(vehicle.filename.split('.')[0]),
-        license_plate       = vehicle.license_plate.result_ocr,
+        timestamp           = vehicle.id,
+        license_plate       = vehicle.license_plate.license_plate,
         conf_license_plate  = vehicle.license_plate.confidence,
-        vehicle_type        = vehicle.vehicle_classification.clases,
+        filename_plate      = __decode_sting2image(vehicle.license_plate.image, 'license_plate', vehicle.id ),
+        vehicle_type        = vehicle.vehicle_classification.vehicle_type,
         conf_vehicle_type   = vehicle.vehicle_classification.confidence,
-        processing_time     = vehicle.processing_time,
-        image_filename      = vehicle.filename,
+        filename_vehicle    = __decode_sting2image(vehicle.vehicle_classification.image, 'vehicle', vehicle.id),
+        processing_time     = vehicle.processing_time
     )
     
     db.add(db_vehicle); db.commit(); db.refresh(db_vehicle)

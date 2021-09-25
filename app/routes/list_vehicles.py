@@ -26,8 +26,10 @@ manager = socket.ConnectionManager()
 
 @router.get("/")
 def table_vehicles(request: Request):
-	result = "Type a number"
-	return templates.TemplateResponse('list_vehicles.html', context={'request': request, 'result': result})
+	results = {
+		'title' : 'List all results OCR'
+	}
+	return templates.TemplateResponse('list_vehicles.html', context={'request': request, 'result': results})
 
 @router.post('/add')
 def add_vehicle(
@@ -35,16 +37,6 @@ def add_vehicle(
 	db: Session = Depends(get_session_db)
 	):
 	return controllers.add_vehicle(db, vehicle)
-
-@router.get('/all')
-def get_vehicles(
-	request: Request
-	):
-	results = {
-		'title' : 'List all results OCR'
-	}
-	return templates.TemplateResponse('list_vehicles.html', context={'request': request, 'results': results})
-
 
 async def get_vehicle_socket(
 	websocket: WebSocket,
