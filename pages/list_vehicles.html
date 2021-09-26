@@ -45,7 +45,7 @@
                                 </td>`);
                         tr.append(`<td class="text-center border-b">
                                     <div class="font-normal whitespace-no-wrap">
-                                        ${new Date(result.timestamp).toLocaleTimeString('id-ID', options_datetime)}
+                                        ${new Date(result.timestamp*1000).toLocaleTimeString('id-ID', options_datetime)}
                                     </div>
                                 </td>`);
                         tr.append(`<td class="text-center border-b">
