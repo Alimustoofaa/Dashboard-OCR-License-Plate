@@ -11,6 +11,7 @@ class Vehicle(Base):
 
     id                  = Column(Integer, primary_key=True, index=True)
     timestamp           = Column(Integer)
+    rest_area           = Column(String)
     license_plate       = Column(String)
     conf_license_plate  = Column(FLOAT)
     vehicle_type        = Column(String)

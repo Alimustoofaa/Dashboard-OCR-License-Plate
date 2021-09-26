@@ -21,6 +21,7 @@ def __decode_sting2image(image_encoded, type_image, vehicle_id):
 def add_vehicle(db: Session, vehicle: S_Vehicle):
     db_vehicle = M_Vehicle(
         timestamp           = vehicle.id,
+        rest_area           = vehicle.rest_area,
         license_plate       = vehicle.license_plate.license_plate,
         conf_license_plate  = vehicle.license_plate.confidence,
         filename_plate      = __decode_sting2image(vehicle.license_plate.image, 'license_plate', vehicle.id ),
