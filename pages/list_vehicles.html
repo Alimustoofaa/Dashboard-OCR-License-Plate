@@ -29,7 +29,7 @@
                 } else {
                     var ws_scheme = "ws://"
                 };
-                var options_datetime = {hour: '2-digit', minute: '2-digit', hour12:false, day: 'numeric', year: 'numeric', month: 'numeric'};
+                var options_datetime = {hour: '2-digit', minute: '2-digit', second: '2-digit', hour12:false, day: 'numeric', year: 'numeric', month: 'numeric'};
                 var ws = new WebSocket(ws_scheme + location.host + "/ws/" + enpoint_url);
                 ws.onmessage = function(event) {
                     $('tbody').empty();
@@ -57,7 +57,7 @@
                                     <div class="font-normal whitespace-no-wrap">
                                         ${result.license_plate}
                                         <span class="text-xs px-1 bg-theme-1 text-white mr-1">
-                                            ${result.conf_license_plate*100}%
+                                            ${parseInt(result.conf_license_plate*100)}%
                                         </span>
                                     </div>
                                 </td>`);
@@ -74,7 +74,7 @@
                                     <div class="font-normal whitespace-no-wrap">
                                         ${result.vehicle_type.toUpperCase()}
                                         <span class="text-xs px-1 bg-theme-6 text-white mr-1">
-                                            ${result.conf_vehicle_type*100}%
+                                            ${parseInt(result.conf_vehicle_type*100)}%
                                         </span>
                                     </div>
                                 </td>`);
