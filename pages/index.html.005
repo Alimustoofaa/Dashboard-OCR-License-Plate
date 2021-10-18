@@ -1,0 +1,113 @@
+{% set active_page = "index" %}
+{% include 'components/header.html' %}
+{% include 'components/mobile-menu.html' %}
+{% include 'components/side-menu.html' %}
+{% include 'components/top-bar.html' %}
+
+<div class="preview text-center">
+   <div class="image-full relative flex sm:justify-center w-50 h-50">
+      <video
+         id="km379a"
+         class="video-js"
+         width="50%"
+         controls
+         preload="auto"
+         data-setup='{}'>
+         <source src="http://149.129.48.59:8080/live/restarea379a.m3u8" type="application/x-mpegURL"></source>
+         <p class="vjs-no-js">
+         To view this video please enable JavaScript, and consider upgrading to a
+         web browser that
+         <a href="https://videojs.com/html5-video-support/" target="_blank">
+            supports HTML5 video
+         </a>
+         </p>
+      </video>
+   </div>
+</div>
+<div class="grid grid-cols-2 gap-2">
+   <div>
+      <video
+         id="km379a"
+         class="video-js"
+         width="50%"
+         controls
+         preload="auto"
+         data-setup='{}'>
+         <source src="http://149.129.48.59:8080/live/restarea379a.m3u8" type="application/x-mpegURL"></source>
+         <p class="vjs-no-js">
+         To view this video please enable JavaScript, and consider upgrading to a
+         web browser that
+         <a href="https://videojs.com/html5-video-support/" target="_blank">
+            supports HTML5 video
+         </a>
+         </p>
+      </video>
+      <div class="overlay">
+         <h2>KM 379 A</h2>
+      </div>
+   </div>
+   <div>
+      <video
+         id="km207a"
+         class="video-js"
+         width="50%"
+         controls
+         preload="auto"
+         data-setup='{}'>
+         <source src="http://149.129.48.59:8080/restarea207a/km207a.m3u8" type="application/x-mpegURL"></source>
+         <p class="vjs-no-js">
+         To view this video please enable JavaScript, and consider upgrading to a
+         web browser that
+         <a href="https://videojs.com/html5-video-support/" target="_blank">
+            supports HTML5 video
+         </a>
+         </p>
+      </video>
+      <div class="overlay">
+         <h2>KM 207 A</h2>
+      </div>
+   </div>
+   <div>
+      <video
+         id="km88a"
+         class="video-js"
+         width="50%"
+         controls
+         preload="auto"
+         data-setup='{}'>
+         <source src="http://149.129.48.59:8080/live/restarea88a/km88a.m3u8" type="application/x-mpegURL"></source>
+         <p class="vjs-no-js">
+         To view this video please enable JavaScript, and consider upgrading to a
+         web browser that
+         <a href="https://videojs.com/html5-video-support/" target="_blank">
+            supports HTML5 video
+         </a>
+         </p>
+      </video>
+      <div class="overlay">
+         <h2>KM 88 A</h2>
+      </div>
+   </div>
+   <div>
+      <video
+         id="km88b"
+         class="video-js"
+         width="50%"
+         controls
+         preload="auto"
+         data-setup='{}'>
+         <source src="http://149.129.48.59:8080/live/restarea88b/km88b.m3u8" type="application/x-mpegURL"></source>
+         <p class="vjs-no-js">
+         To view this video please enable JavaScript, and consider upgrading to a
+         web browser that
+         <a href="https://videojs.com/html5-video-support/" target="_blank">
+            supports HTML5 video
+         </a>
+         </p>
+      </video>
+      <div class="overlay">
+         <h2>KM 88 B</h2>
+      </div>
+   </div>
+</div>
+{% include 'components/footer.html' %}

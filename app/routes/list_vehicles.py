@@ -31,21 +31,30 @@ def table_vehicles(request: Request):
 	}
 	return templates.TemplateResponse('list_vehicles.html', context={'request': request, 'result': results})
 
+@router.get("/{rest_area}")
+def table_vehicles(request: Request):
+	results = {
+		'title' : 'List all results OCR'
+	}
+	return templates.TemplateResponse('list_vehicles.html', context={'request': request, 'result': results})
+
 @router.post('/add')
-def add_vehicle(
+async def add_vehicle(
 	vehicle: Vehicle,
 	db: Session = Depends(get_session_db)
 	):
-	return controllers.add_vehicle(db, vehicle)
+	return await controllers.add_vehicle(db, vehicle)
 
 async def get_vehicle_socket(
 	websocket: WebSocket,
 	):
 	from ..config.database import SessionLocal
 	await websocket.accept()
+	data = await websocket.receive_text()
 	try:
 		while True:
-			list_vehicles = controllers.get_vehicles(SessionLocal())
+			if data == 'all': list_vehicles = await controllers.get_vehicles(SessionLocal())
+			else: list_vehicles =  await controllers.get_filter_vehicles(SessionLocal(), str(data))
 			list = [i.__dict__ for i in list_vehicles if i != '_sa_instance_state']
 			await websocket.send_json({'results': jsonable_encoder(list)})
 			await asyncio.sleep(5)

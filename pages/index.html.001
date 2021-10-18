@@ -1,0 +1,83 @@
+{% set active_page = "index" %}
+{% include 'components/header.html' %}
+{% include 'components/mobile-menu.html' %}
+{% include 'components/side-menu.html' %}
+{% include 'components/top-bar.html' %}
+
+<div class="grid grid-cols-12 gap-6">
+    <video id="player" controls autoplay></video>
+    <button id="capture">Capture</button>
+    <canvas id="canvas" width="320" height="240"></canvas>
+    <h1>Rest Area KM 88A</h1>
+    <p></p>
+    <video id="player1" controls autoplay></video>
+    <button id="capture1">Capture</button>
+    <canvas id="canvas1" width="320" height="240"></canvas>
+    <h1>Rest Area KM 88B</h1>
+    <p></p>
+    <br><br>
+    <video id="player2" controls autoplay></video>
+    <button id="capture2">Capture</button>
+    <canvas id="canvas2" width="320" height="240"></canvas>
+    <h1>Rest Area KM 207A</h1>
+    <p></p>
+    <video id="player3" controls autoplay></video>
+    <button id="capture3">Capture</button>
+    <canvas id="canvas3" width="320" height="240"></canvas>
+    <h1>Rest Area KM 379A</h1>
+    <p></p>
+    
+    <script>
+      // For first window of the stream
+      const player = document.getElementById("player");
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+      const captureButton = document.getElementById("capture");
+
+      const constraints = {
+        video: true
+      };
+
+      captureButton.addEventListener("click", () => {
+        // Draw the video frame to the canvas.
+        context.drawImage(player, 0, 0, canvas.width, canvas.height);
+        const dataURI = canvas.toDataURL("image/jpeg", 0.5);
+
+        let str = dataURI.slice(23);
+        // alert(str);
+        console.log(str);
+        
+        document.querySelector("h1").innerHTML=(str);
+      });
+
+      // Attach the video stream to the video element and autoplay.
+      navigator.mediaDevices.getUserMedia(constraints).then(stream => 
+      {
+        player.srcObject = stream;
+      });
+      
+      const player1 = document.getElementById("player1");
+      const canvas1 = document.getElementById("canvas1");
+      const context1 = canvas.getContext("2d");
+      const captureButton2 = document.getElementById("capture1");
+      
+
+      captureButton2.addEventListener("click", () => {
+        // Draw the video frame to the canvas.
+        context1.drawImage(player1, 2, 2, canvas.width, 
+        canvas.height);
+        const dataURI2 = canvas.toDataURL("image/jpeg", 0.5);
+          
+         alert(dataURI2);
+        
+      });
+
+      // Attach the video stream to the video element and autoplay.
+      navigator.mediaDevices.getUserMedia(constraints).then(stream => 
+      {
+        player1.srcObject = stream;
+      });
+      
+    </script>    
+</div>
+{% include 'components/footer.html' %}

@@ -29,14 +29,21 @@
                 } else {
                     var ws_scheme = "ws://"
                 };
+                
                 var options_datetime = {hour: '2-digit', minute: '2-digit', second: '2-digit', hour12:false, day: 'numeric', year: 'numeric', month: 'numeric'};
                 var ws = new WebSocket(ws_scheme + location.host + "/ws/" + enpoint_url);
+                ws.onopen = function(event) {
+                    if (url_segs[2] == '') {
+                        ws.send("all");
+                    } else {
+                        ws.send(url_segs[2]);
+                    };
+                };
                 ws.onmessage = function(event) {
                     $('tbody').empty();
                     results = JSON.parse(event.data)['results'];
                     
                     for (let [index, result] of results.entries()) {
-                        console.log(result);
                         tr = $('<tr>');
                         tr.append(`<td class="text-center border-b">
                                     <div class="font-normal whitespace-no-wrap">

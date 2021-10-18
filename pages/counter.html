@@ -1,0 +1,180 @@
+{% set active_page = "counter" %}
+{% include 'components/header.html' %}
+{% include 'components/mobile-menu.html' %}
+{% include 'components/side-menu.html' %}
+{% include 'components/top-bar.html' %}
+
+<script>
+    url_segs = window.location.pathname.split("/");
+    var enpoint_url = url_segs[1]
+    var results
+    if (window.location.protocol == "https:") {
+        var ws_scheme = "wss://";
+    } else {
+        var ws_scheme = "ws://"
+    };
+    
+    var options_datetime = {hour: '2-digit', minute: '2-digit', second: '2-digit', hour12:false, day: 'numeric', year: 'numeric', month: 'numeric'};
+    var ws = new WebSocket(ws_scheme + location.host + "/ws/" + enpoint_url);
+    ws.onmessage = function(event) {
+        results = JSON.parse(event.data)['results'];
+        Object.keys(results).forEach(function(key) {
+            console.log(key)
+        });
+    };
+</script>
+<div class="intro-y grid grid-cols-12 gap-6 mt-5">
+    <!-- <div class="intro-y col-span-12 md:col-span-6 xl:col-span-6 box">
+        <h2 class="intro-y font-medium text-xl sm:text-2xl text-center mt-5">
+            KM 379 A
+        </h2>
+        <div class="p-5" id="hoverable-table">
+            <div class="preview">
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="border border-b-2 whitespace-no-wrap">#</th>
+                                <th class="border border-b-2 whitespace-no-wrap">Vehicle Type</th>
+                                <th class="border border-b-2 whitespace-no-wrap">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">1</td>
+                                <td class="border">Angelina</td>
+                                <td class="border">Jolie</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">2</td>
+                                <td class="border">Brad</td>
+                                <td class="border">Pitt</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">3</td>
+                                <td class="border">Charlie</td>
+                                <td class="border">Hunnam</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="intro-y col-span-12 md:col-span-6 xl:col-span-6 box">
+        <h2 class="intro-y font-medium text-xl sm:text-2xl text-center mt-5">
+            KM 207 A
+        </h2>
+        <div class="p-5" id="hoverable-table">
+            <div class="preview">
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="border border-b-2 whitespace-no-wrap">#</th>
+                                <th class="border border-b-2 whitespace-no-wrap">Vehicle Type</th>
+                                <th class="border border-b-2 whitespace-no-wrap">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">1</td>
+                                <td class="border">Angelina</td>
+                                <td class="border">Jolie</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">2</td>
+                                <td class="border">Brad</td>
+                                <td class="border">Pitt</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">3</td>
+                                <td class="border">Charlie</td>
+                                <td class="border">Hunnam</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="intro-y col-span-12 md:col-span-6 xl:col-span-6 box">
+        <h2 class="intro-y font-medium text-xl sm:text-2xl text-center mt-5">
+            KM 88 A
+        </h2>
+        <div class="p-5" id="hoverable-table">
+            <div class="preview">
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="border border-b-2 whitespace-no-wrap">#</th>
+                                <th class="border border-b-2 whitespace-no-wrap">Vehicle Type</th>
+                                <th class="border border-b-2 whitespace-no-wrap">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">1</td>
+                                <td class="border">Angelina</td>
+                                <td class="border">Jolie</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">2</td>
+                                <td class="border">Brad</td>
+                                <td class="border">Pitt</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">3</td>
+                                <td class="border">Charlie</td>
+                                <td class="border">Hunnam</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="intro-y col-span-12 md:col-span-6 xl:col-span-6 box">
+        <h2 class="intro-y font-medium text-xl sm:text-2xl text-center mt-5">
+            KM 88 B
+        </h2>
+        <div class="p-5" id="hoverable-table">
+            <div class="preview">
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="border border-b-2 whitespace-no-wrap">#</th>
+                                <th class="border border-b-2 whitespace-no-wrap">Vehicle Type</th>
+                                <th class="border border-b-2 whitespace-no-wrap">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">1</td>
+                                <td class="border">Angelina</td>
+                                <td class="border">Jolie</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">2</td>
+                                <td class="border">Brad</td>
+                                <td class="border">Pitt</td>
+                            </tr>
+                            <tr class="hover:bg-gray-200">
+                                <td class="border">3</td>
+                                <td class="border">Charlie</td>
+                                <td class="border">Hunnam</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</div>
+{% include 'components/footer.html' %}
